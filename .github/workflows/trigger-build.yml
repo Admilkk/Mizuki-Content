@@ -11,9 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Mizuki workflow_dispatch
-        uses: peter-evans/workflow-dispatch@v3
+        uses: actions/github-script@v7
         with:
-          token: ${{ secrets.DISPATCH_TOKEN }}
-          repository: Admilkk/Mizuki
-          workflow: deploy.yml
-          ref: master
+          github-token: ${{ secrets.DISPATCH_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'Admilkk',
+              repo: 'Mizuki',
+              workflow_id: 'deploy.yml',
+              ref: 'master'
+            });
