@@ -10,9 +10,10 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger repository dispatch
-        uses: peter-evans/repository-dispatch@v3
+      - name: Trigger Mizuki workflow_dispatch
+        uses: peter-evans/workflow-dispatch@v3
         with:
           token: ${{ secrets.DISPATCH_TOKEN }}
           repository: Admilkk/Mizuki
-          event-type: content-updated
+          workflow: deploy.yml
+          ref: master
