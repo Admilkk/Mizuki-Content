@@ -11,16 +11,8 @@ export interface DiaryItem {
 	tags?: string[];
 }
 
-// 示例日记数据
-const diaryData: DiaryItem[] = [
-	{
-		id: 1,
-		content:
-			"The falling speed of cherry blossoms is five centimeters per second!",
-		date: "2025-01-15T10:30:00Z",
-		images: ["/images/diary/sakura.jpg", "/images/diary/1.jpg"],
-	},
-];
+// 空数据：已移除默认日记
+const diaryData: DiaryItem[] = [];
 
 // 获取日记统计数据
 export const getDiaryStats = () => {
@@ -30,15 +22,17 @@ export const getDiaryStats = () => {
 	).length;
 	const hasLocation = diaryData.filter((item) => item.location).length;
 	const hasMood = diaryData.filter((item) => item.mood).length;
+	const safePercent = (count: number) =>
+		total === 0 ? 0 : Math.round((count / total) * 100);
 
 	return {
 		total,
 		hasImages,
 		hasLocation,
 		hasMood,
-		imagePercentage: Math.round((hasImages / total) * 100),
-		locationPercentage: Math.round((hasLocation / total) * 100),
-		moodPercentage: Math.round((hasMood / total) * 100),
+		imagePercentage: safePercent(hasImages),
+		locationPercentage: safePercent(hasLocation),
+		moodPercentage: safePercent(hasMood),
 	};
 };
 
